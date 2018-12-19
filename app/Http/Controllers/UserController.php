@@ -16,7 +16,7 @@ class UserController extends Controller
         $Validators = Validator::make($req->all(),[
             'username'=>'required|min:3|max:8|unique:users',
             'password'=>'required|min:3|max:12|confirmed',
-            'phone'=>'required|max:11',
+            'phone'=>'required|regex:/^1[34578]\d{9}$/',
         ]);
 
         // 失败返回的数据

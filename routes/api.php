@@ -22,3 +22,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('members', 'UserController@regist');
 // 登录
 Route::post('authorizations', 'UserController@login');
+
+// 需要token的路由组
+Route::middleware(['jwt'])->group(function () {
+
+
+});
