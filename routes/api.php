@@ -26,5 +26,7 @@ Route::post('authorizations', 'UserController@login');
 // 需要token的路由组
 Route::middleware(['jwt'])->group(function () {
 
-
+  
 });
+  // 发表文章
+  Route::post('article', 'ArticleController@pushblog');
