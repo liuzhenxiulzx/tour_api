@@ -30,3 +30,13 @@ Route::middleware(['jwt'])->group(function () {
 });
   // 发表文章
   Route::post('article', 'ArticleController@pushblog');
+  // 文章点赞
+  Route::post('addagree/{id}', 'ArticleController@addagree');
+  // 获取token
+  Route::get('token', 'ArticleController@gettoken');
+  //首页显示文章
+  Route::get('showblog', 'IndexController@showblog');
+  //文章详情
+  Route::get('details/{id}', 'IndexController@detailshow');
+  //点赞表修改
+  Route::post('supports', 'GoodupController@addgoodup');

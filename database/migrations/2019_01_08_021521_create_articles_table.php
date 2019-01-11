@@ -18,9 +18,9 @@ class CreateArticlesTable extends Migration
             $table->unsignedInteger('user_id')->comment('用户id');
             $table->string('content')->comment('文章内容');
             $table->string('article_img')->comment('文章图片');
-            $table->unsignedInteger('comment_id')->comment('评论表id');
-            $table->unsignedInteger('goodup_id')->comment('点赞表id');
-            $table->enum('is_collect',['0','1'])->comment('是否收藏');
+            $table->unsignedInteger('comment_number')->default(0)->comment('文章评论数');
+            $table->unsignedInteger('goods_number')->default(0)->comment('点赞数');
+            $table->enum('is_collect',['0','1'])->default(0)->comment('是否收藏');
             $table->timestamps();
         });
     }

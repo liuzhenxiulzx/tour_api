@@ -6,9 +6,28 @@ use Illuminate\Http\Request;
 use Firebase\JWT\JWT;
 use Validator;
 use App\Models\Article;
+use Qiniu\Storage\UploadManager;
+use Qiniu\Auth;
 
 class ArticleController extends Controller
 {
+
+    public function gettoken(){
+        $accessKey = 'MTdzBcP66AhXwzrKzf2nDT2gOjrft0wYZc9FwXYW';   // 访问KEY
+        $secretKey = '_PZctlny0U_TfoAWar-av-a8L3ma03W9gMZmgkxz';   // 密钥KEY
+        $domain = 'pl0c9y4zt.bkt.clouddn.com';       // 访问域名
+        // 配置参数
+        $bucketName = 'tour';   // 创建的 bucket(新建的存储空间的名字)
+
+        $upManager = new UploadManager();
+        // 登录获取令牌
+        $auth = new Auth($accessKey, $secretKey);
+        $token = $auth->uploadToken($bucketName);
+
+        return success($token);
+    }
+
+
     public function pushblog(Request $req){
          // 表单验证
          $Validators = Validator::make($req->all(),[
@@ -24,14 +43,29 @@ class ArticleController extends Controller
             return error($errors,422);
         }
 
+        // $images =  json_encode($req->article_img);    
         // 把数据插入数据库
-        $userdata = Article::create([
-            'user_id'=>$req->user_id,
-            'content'=>$req->content,
-        ]);
-
+        // $userdata = Article::create([
+        //     'user_id'=>$req->user_id,
+        //     'content'=>$req->content,
+        //     'article_img'=>$req->article_img
+        // ]);
+        // var_dump($images);
         //成功返回的数据
-        return success($userdata);
+        // return success($req->article_img);
 
     }
+
+
+
+    //点赞数
+    public function addagree(Request $req,$id){
+        $article = Article::where('id',$id)->first();
+        $article->goods_number = $req->goods_number;
+        $data = $article->save();
+
+        return success($data);
+    }
+
+
 }

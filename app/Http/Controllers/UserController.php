@@ -71,7 +71,7 @@ class UserController extends Controller
                 $expire = $time + env('JWT_EXPIRE');
                 // 定义令牌中的数据
                 $data = [
-                    'iat'=>$time,//当前时间
+                    'iat'=>$time,//当前时间k
                     'exp'=>$expire,//过期时间
                     'id'=>$user->id //用户id
                 ];
@@ -80,6 +80,7 @@ class UserController extends Controller
                 //发给前端
                 return success([
                     'ACCESS_TOKEN'=>$jwt,
+                    'USER_ID'=>$user->id,
                 ]);
             }
             else
