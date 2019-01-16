@@ -30,7 +30,7 @@ Route::middleware(['jwt'])->group(function () {
 });
   // 发表文章
   Route::post('article', 'ArticleController@pushblog');
-  // 文章点赞
+  // 文章点赞数的添加
   Route::post('addagree/{id}', 'ArticleController@addagree');
   // 获取token
   Route::get('token', 'ArticleController@gettoken');
@@ -40,3 +40,13 @@ Route::middleware(['jwt'])->group(function () {
   Route::get('details/{id}', 'IndexController@detailshow');
   //点赞表修改
   Route::post('supports', 'GoodupController@addgoodup');
+
+// 文章评论
+Route::post('comment', 'CommentController@addcomment');
+// 获取文章评论
+Route::get('getcomment/{id}','CommentController@viewcomment');
+
+// 关注
+Route::post('follows', 'FollowController@addfollow');
+// 取消关注
+Route::post('cancel', 'FollowController@cancelfollow');

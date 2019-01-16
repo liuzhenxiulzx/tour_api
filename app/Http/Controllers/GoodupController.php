@@ -8,6 +8,7 @@ use Validator;
 
 class GoodupController extends Controller
 {
+    // 点赞修改
     public function addgoodup(Request $req){
          // 表单验证
          $Validators = Validator::make($req->all(),[
@@ -24,14 +25,34 @@ class GoodupController extends Controller
             return error($errors,422);
         }
 
-        // 把数据插入数据库
-        $goodups = Goodup::create([
-            'article_id'=>$req->article_id,
-            'upuser_id'=>$req->upuser_id,
-            'isgoodup'=>$req->isgoodup,
-        ]);
+        // 判断是否有相同的数据
+        $user = Goodup::where('article_id','=',$req->article_id)
+                    ->where('upuser_id','=',$req->upuser_id)
+                    ->first();
+                  
+        if($user){
 
-        //成功返回的数据
-        return success($goodups);
+            // 如果存在则修改数据
+           $user->isgoodup = $req->isgoodup;
+           $user->save();
+           return success($user);
+
+        }
+        else
+        {
+            //不存在 把数据插入数据库
+            $goodups = Goodup::create([
+                'article_id'=>$req->article_id,
+                'upuser_id'=>$req->upuser_id,
+                'isgoodup'=>$req->isgoodup,
+            ]);
+            //成功返回的数据
+            return success($goodups);
+
+        }
+     
+        
     }
+
+
 }

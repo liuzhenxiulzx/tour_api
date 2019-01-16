@@ -11,7 +11,7 @@ use Qiniu\Auth;
 
 class ArticleController extends Controller
 {
-
+    // 图片上传token
     public function gettoken(){
         $accessKey = 'MTdzBcP66AhXwzrKzf2nDT2gOjrft0wYZc9FwXYW';   // 访问KEY
         $secretKey = '_PZctlny0U_TfoAWar-av-a8L3ma03W9gMZmgkxz';   // 密钥KEY
@@ -27,7 +27,7 @@ class ArticleController extends Controller
         return success($token);
     }
 
-
+    // 文章发表
     public function pushblog(Request $req){
          // 表单验证
          $Validators = Validator::make($req->all(),[
@@ -56,15 +56,13 @@ class ArticleController extends Controller
 
     }
 
-
-
-    //点赞数
+    //文章点赞数量的添加
     public function addagree(Request $req,$id){
         $article = Article::where('id',$id)->first();
         $article->goods_number = $req->goods_number;
-        $data = $article->save();
+        $article->save();
 
-        return success($data);
+        return success($req->goods_number);
     }
 
 

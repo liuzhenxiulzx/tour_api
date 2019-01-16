@@ -12,7 +12,7 @@ class IndexController extends Controller
 {
     //首页显示
     public function showblog(Request $req){
-       $blog = Article::get();
+       $blog = Article::orderBy('id', 'DESC')->get();
        foreach($blog as $v){
            $v->goodups;
        }
