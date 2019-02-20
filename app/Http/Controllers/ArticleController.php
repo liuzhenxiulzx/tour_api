@@ -15,9 +15,9 @@ class ArticleController extends Controller
     public function gettoken(){
         $accessKey = 'MTdzBcP66AhXwzrKzf2nDT2gOjrft0wYZc9FwXYW';   // 访问KEY
         $secretKey = '_PZctlny0U_TfoAWar-av-a8L3ma03W9gMZmgkxz';   // 密钥KEY
-        $domain = 'pl0c9y4zt.bkt.clouddn.com';       // 访问域名
+        $domain = 'pn3sdg7c5.bkt.clouddn.com';       // 访问域名
         // 配置参数
-        $bucketName = 'tour';   // 创建的 bucket(新建的存储空间的名字)
+        $bucketName = 'tour-app';   // 创建的 bucket(新建的存储空间的名字)
 
         $upManager = new UploadManager();
         // 登录获取令牌
@@ -33,6 +33,7 @@ class ArticleController extends Controller
          $Validators = Validator::make($req->all(),[
             'user_id'=>'required',
             'content'=>'required|max:10000',
+            'article_img'=>'required'
         ]);
 
         // 失败返回的数据
@@ -42,17 +43,14 @@ class ArticleController extends Controller
             // 返回json对象以及状态码
             return error($errors,422);
         }
-
-        // $images =  json_encode($req->article_img);    
         // 把数据插入数据库
-        // $userdata = Article::create([
-        //     'user_id'=>$req->user_id,
-        //     'content'=>$req->content,
-        //     'article_img'=>$req->article_img
-        // ]);
-        // var_dump($images);
+        $userdata = Article::create([
+            'user_id'=>$req->user_id,
+            'content'=>$req->content,
+            'article_img'=>$req->article_img
+        ]);
         //成功返回的数据
-        // return success($req->article_img);
+        return success($req->userdata);
 
     }
 

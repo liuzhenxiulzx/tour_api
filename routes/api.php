@@ -50,3 +50,7 @@ Route::get('getcomment/{id}','CommentController@viewcomment');
 Route::post('follows', 'FollowController@addfollow');
 // 取消关注
 Route::post('cancel', 'FollowController@cancelfollow');
+
+
+// 收藏
+Route::post('collection', 'CollectController@addcollect');
