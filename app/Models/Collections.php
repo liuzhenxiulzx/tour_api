@@ -11,6 +11,10 @@ class Collections extends Model
          // 是否有时间字段
          public $timestamps = true;
          // 设置允许填充的字段
-         protected $fillable = ['article_id','user_id'];
+         protected $fillable = ['article_id','user_id','iscollection'];
+
+         public function collet(){
+            return $this->belongsTo(Article::class,'article_id');
+         }
 }
 

@@ -15,7 +15,7 @@ class ArticleController extends Controller
     public function gettoken(){
         $accessKey = 'MTdzBcP66AhXwzrKzf2nDT2gOjrft0wYZc9FwXYW';   // 访问KEY
         $secretKey = '_PZctlny0U_TfoAWar-av-a8L3ma03W9gMZmgkxz';   // 密钥KEY
-        $domain = 'pn3sdg7c5.bkt.clouddn.com';       // 访问域名
+        $domain = 'tour.liuzhenxiu.cn';       // 访问域名
         // 配置参数
         $bucketName = 'tour-app';   // 创建的 bucket(新建的存储空间的名字)
 
@@ -55,12 +55,18 @@ class ArticleController extends Controller
     }
 
     //文章点赞数量的添加
-    public function addagree(Request $req,$id){
-        $article = Article::where('id',$id)->first();
+    public function addagree(Request $req){
+        $article = Article::where('id',$req->id)->first();
         $article->goods_number = $req->goods_number;
         $article->save();
-
-        return success($req->goods_number);
+        return success($article);
+    }
+    //文章差评数量的添加
+    public function addnegative(Request $req){
+        $article = Article::where('id',$req->id)->first();
+        $article->negative_comment = $req->negative_comment;
+        $article->save();
+        return success($article);
     }
 
 

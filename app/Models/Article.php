@@ -11,10 +11,17 @@ class Article extends Model
     // 是否有时间字段
     public $timestamps = true;
     // 设置允许填充的字段
-    protected $fillable = ['user_id','content','article_img','comment_number','goods_number','is_collect'];
+    protected $fillable = ['user_id','content','article_img','comment_number', 'collect_number','negative_comment','goods_number','is_collect'];
 
     public function goodups(){
         return $this->hasMany(goodup::class,'article_id');
      }
 
+    public function collections(){
+        return $this->hasMany(Collections::class,'article_id');
+     }
+
+     public function blogauthor(){
+        return $this->belongsTo(Users::class,'user_id');
+     }
 }

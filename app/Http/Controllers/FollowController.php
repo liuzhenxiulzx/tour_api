@@ -60,5 +60,22 @@ class FollowController extends Controller
       
     }
 
+    // 判断是否关注
+    public function isfollow(Request $req)
+    {
+        $data = Follows::where('my_id',$req->myid)
+                        ->where('other_id',$req->bloguserid)
+                        ->first();
+        // 判断是否存在
+        if($data)
+        {
+              return success(1);
+        }           
+        else
+        {
+            return success(0);
+        }
+    }
+
 
 }

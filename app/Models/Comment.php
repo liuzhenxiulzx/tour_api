@@ -13,4 +13,7 @@ class Comment extends Model
      // 设置允许填充的字段
      protected $fillable = ['article_id','comuser_id','comment'];
 
+     public function comentuser(){
+          return $this->belongsTo(Users::class,'comuser_id');
+       }
 }

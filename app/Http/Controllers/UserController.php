@@ -93,4 +93,9 @@ class UserController extends Controller
             return error('用户不存在',403);
         }
     }
+
+    // 修改信息
+    public function editPersonalnews(Request $req, $id){
+        
+    }
 }

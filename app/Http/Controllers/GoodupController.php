@@ -14,7 +14,7 @@ class GoodupController extends Controller
          $Validators = Validator::make($req->all(),[
             'article_id'=>'required',
             'upuser_id'=>'required',
-            'isgoodup'=>'required',
+            // 'isgoodup'=>'required',
         ]);
 
         // 失败返回的数据
@@ -55,4 +55,21 @@ class GoodupController extends Controller
     }
 
 
+
+    // 获取点赞信息
+    public function condition($id)
+    {
+          $data = Goodup::where('upuser_id','=',$id)->get();
+          //成功返回的数据
+          return success($data);
+
+    }
+    // 获取文章对应的点赞状态
+    public function blogstate(Request $req,$id,$blogid)
+    {
+        $data = Goodup::where('upuser_id','=',$id)
+                        ->where('article_id','=',$blogid)
+                        ->first();
+        return success($data);
+    }
 }
