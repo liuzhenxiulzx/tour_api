@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Validator;
 use App\Models\Users;
+use App\Models\Follows;
 use Illuminate\Support\Facades\Hash; 
 use Firebase\JWT\JWT;
 
@@ -30,6 +31,7 @@ class UserController extends Controller
         // 把数据插入数据库
         $userdata = Users::create([
             'username'=>$req->username,
+            'header'=>$req->header,
             // bcrypt 使用hase把密码加密
             'password'=>bcrypt($req->password),
             'phone'=>$req->phone,
@@ -95,7 +97,41 @@ class UserController extends Controller
     }
 
     // 修改信息
-    public function editPersonalnews(Request $req, $id){
-        
+    public function editPersonalnews(Request $req){
+        $user = Users::where('id',$req->id)->first();
+        if($req->oldpassword) {            
+            if(hash::check($req->oldpassword,$user->password)){
+                // 修改数据
+                $user->username = $req->username;
+                $user->header = $req->header;
+                $user->password = bcrypt($req->password);
+                $user->phone = $req->phone;
+                $user->save();
+                return success($user);
+             } else {
+                  return error('原密码错误',404);
+             }
+        } else {
+            $user->username = $req->username;
+            $user->header = $req->header;
+            $user->password = bcrypt($req->password);
+            $user->phone = $req->phone;
+            $user->save();
+            return success($user);
+        }
+    }
+    public function personalName(Request $req, $id){
+        $data = Users::where('id',$id)->first();
+        $mefollow = Follows::where('my_id',$id)->count(); //我关注的
+        $followme = Follows::where('other_id',$id)->count(); //关注我的
+        $data['mefoolow'] = $mefollow;
+        $data['followme'] = $followme;
+        return success($data);
+    }
+    public function backgroundimg(Request $req){
+        $user = Users::where('id',$req->id)->first();
+        $user->backgroundimg = $req->backgroundimg;
+        $user->save();
+        return success($user);
     }
 }

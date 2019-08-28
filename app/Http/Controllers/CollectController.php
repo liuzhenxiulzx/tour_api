@@ -14,6 +14,7 @@ class CollectController extends Controller
        $Validators = Validator::make($req->all(),[
         'article_id'=>'required',
         'user_id'=>'required',
+        // 'iscollection'=>'iscollection',
         ]);
 
         // 失败返回的数据
@@ -48,14 +49,14 @@ class CollectController extends Controller
     }
 
 
-    //添加收藏数量
-    public function addcollenumber(Request $req)
-    {   
-        $data = Article::where('id',$req->id)->first();
-        $data->collect_number = $req->collect_number;
-        $data->save();
-        return success($data);
-    }
+    // //添加收藏数量
+    // public function addcollenumber(Request $req)
+    // {   
+    //     $data = Article::where('id',$req->id)->first();
+    //     $data->collect_number = $req->collect_number;
+    //     $data->save();
+    //     return success($data);
+    // }
 
     // 个人收藏
     public function personalcolle(Request $req,$id)

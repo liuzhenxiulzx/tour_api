@@ -11,7 +11,7 @@ class Users extends Model
     // 是否有时间字段
     public $timestamps = true;
     // 设置允许填充的字段
-    protected $fillable = ['username','password','phone'];
+    protected $fillable = ['username','password','phone', 'header'];
     // 需要隐藏的字段
-    protected $hidden = ['phone','password','updated_at','created_at'];
+    protected $hidden = ['password','updated_at','created_at'];
 }
